@@ -56,7 +56,11 @@ class CircularLinkedList : public List<T> {
             // TODO
         }
 
-        string name() {
+    void print() override {
+
+    }
+
+    string name() {
             return "Circular Linked List";
         }
 

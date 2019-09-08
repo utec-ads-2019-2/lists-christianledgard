@@ -10,27 +10,79 @@ class ForwardList : public List<T> {
         ForwardList() : List<T>() {}
 
         T front() {
-            // TODO
+            if(this->head == nullptr)
+                throw out_of_range("This list is empty.");
+            return this->head->data;
         }
 
         T back() {
-            // TODO
+            if(this->tail == nullptr)
+                throw out_of_range("This list is empty.");
+            return this->tail->data;
         }
 
         void push_front(T value) {
-            // TODO
+            auto *temp = new Node<T>;
+            temp->data = value;
+            temp->next = this->head;
+
+            if(this->head == nullptr){
+                this->head = temp;
+                this->tail = temp;
+            } else {
+                this->head = temp;
+            }
+            this->size++;
         }
 
         void push_back(T value) {
-            // TODO
+            auto *temp = new Node<T>;
+            temp->data = value;
+            temp->next = nullptr;
+
+            if (this->head == nullptr) {
+                this->head = temp;
+                this->tail = temp;
+            } else {
+                this->tail->next = temp;
+                this->tail = temp;
+            }
+
+            this->size++;
         }
 
         void pop_front() {
-            // TODO
+            auto temp = this->head;
+            this->head = this->head->next;
+            delete temp;
+
+            if(this->get_size()<=1){
+                this->head = nullptr;
+                this->tail = nullptr;
+            }
+            this->size--;
         }
 
         void pop_back() {
-            // TODO
+            auto temp = this->head;
+            while(temp->next != this->tail){
+                temp = temp->next;
+            }
+            this->tail = temp;
+            delete temp->next;
+            temp->next = nullptr;
+
+            if(this->get_size()<=1){
+                this->head = nullptr;
+                this->tail = nullptr;
+            }
+            this->size--;
+        }
+
+        void print() override{
+            for (auto temp = this->head ; temp != nullptr ; temp = temp->next)
+                cout << temp->data << endl;
+            cout << "Size: " << this->get_size() << endl;
         }
 
         T operator[](int index) {
@@ -38,24 +90,41 @@ class ForwardList : public List<T> {
         }
 
         bool empty() {
-            // TODO
+            return this->tail == nullptr;
         }
 
-        int size() {
-            // TODO
-        }
 
         void clear() {
-            // TODO
+            while(this->head != nullptr) pop_front();
         }
 
         void sort() {
-            // TODO
+            T tempArray[this->get_size()];
+            auto temp = this->head;
+            for (int i = 0 ; temp != nullptr ; temp = temp->next, i++)
+                tempArray[i] = temp->data;
+            int n = sizeof(tempArray)/sizeof(tempArray[0]);
+            std::sort(tempArray, tempArray+n);
+            this->clear();
+            for(auto elementoOrdenado:tempArray)
+                this->push_back(elementoOrdenado);
         }
     
         void reverse() {
-            // TODO
+            auto previo = this->head, siguiente = this->head;
+            previo = siguiente = nullptr;
+            this->tail = this->head;
+
+            while (this->head != nullptr) {
+                siguiente = this->head->next;
+                this->head->next = previo;
+                previo = this->head;
+                this->head = siguiente;
+            }
+
+            this->head = previo;
         }
+        
 
         string name() {
             return "Forward List";
@@ -70,7 +139,9 @@ class ForwardList : public List<T> {
         }
 
         void merge(ForwardList<T> list) {
-            // TODO
+            auto temp = list->head;
+            for (int i = 0 ; temp != nullptr ; temp = temp->next, i++)
+                push_back(temp->data);
         }
 };
 
