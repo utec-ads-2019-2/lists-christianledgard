@@ -33,7 +33,14 @@ class List {
         }
 
         ~List() {
-            // TODO
+            auto current = this->head;
+            for (unsigned int i = 0; i < this->nodes; i++) {
+                auto temp = current;
+                if (temp != nullptr) {
+                    delete temp;
+                    current = current->next;
+                }
+            }
         }
 };
 
