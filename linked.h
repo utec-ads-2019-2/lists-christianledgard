@@ -82,7 +82,12 @@ class LinkedList : public List<T> {
         }
 
         T operator[](int index) {
-            // TODO
+            if (index < this->get_size() and this->head != nullptr) {
+                auto temp = this->head;
+                for (unsigned int i = 0; i < index; i++) temp = temp->next;
+                return temp->data;
+            }
+            throw out_of_range("Index out of range");
         }
 
         bool empty() {
@@ -110,7 +115,6 @@ class LinkedList : public List<T> {
             for (auto temp = this->head; temp != nullptr ; temp = temp->prev)
                 std::swap(temp->next, temp->prev);
             std::swap(this->head, this->tail);
-
         }
 
         void print() override{
@@ -125,16 +129,15 @@ class LinkedList : public List<T> {
         }
 
         BidirectionalIterator<T> begin() {
-            // TODO
+            return BidirectionalIterator<T> (this->head);
         }
 
 	    BidirectionalIterator<T> end() {
-            // TODO
+            return BidirectionalIterator<T> (this->head->next);
         }
 
         void merge(LinkedList<T> list) {
-            auto temp = list->head;
-            for (int i = 0 ; temp != nullptr ; temp = temp->next, i++)
+            for (auto temp = list->head; temp != nullptr ; temp = temp->next)
                 push_back(temp->data);
         }
 };

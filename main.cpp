@@ -10,18 +10,17 @@ int main(int argc, char *argv[]) {
     cout << "\tLists Practice" << endl;
     cout << "===========================================================" << endl << endl;
 
-    //Tester::execute();
+    Tester::execute();
 
-    List<int>* temp = new LinkedList<int>();
-
-    temp->push_back(1);
-    temp->push_back(6);
-    temp->push_back(5);
-    temp->push_back(3);
-    temp->push_back(9);
-    temp->push_back(4);
-    temp->sort();
-    temp->reverse();
+    //List<int>* temp = new CircularLinkedList<int>();
+    //temp->push_back(1);
+    //temp->push_back(6);
+    //temp->push_back(5);
+    //temp->push_back(3);
+    //temp->push_back(9);
+    //temp->push_back(4);
+    //temp->sort();
+    //temp->reverse();
 
 
     //temp->pop_back();
@@ -30,9 +29,9 @@ int main(int argc, char *argv[]) {
     //temp->reverse();
 
 
-    cout <<"Head (FRONT): "<< temp->front() << endl;
-    cout <<"Tail (BACK): "<< temp->back() << endl;
-    temp->print();
+    //cout <<"Head (FRONT): "<< temp->front() << endl;
+    //out <<"Tail (BACK): "<< temp->back() << endl;
+    //temp->print();
 
 
     return EXIT_SUCCESS;

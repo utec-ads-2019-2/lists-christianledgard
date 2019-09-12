@@ -86,7 +86,12 @@ class ForwardList : public List<T> {
         }
 
         T operator[](int index) {
-            // TODO
+            if (index < this->get_size() and this->head != nullptr) {
+                auto temp = this->head;
+                for (unsigned int i = 0; i < index; i++) temp = temp->next;
+                return temp->data;
+            }
+            throw out_of_range("Index out of range");
         }
 
         bool empty() {
@@ -131,11 +136,11 @@ class ForwardList : public List<T> {
         }
 
         ForwardIterator<T> begin() {
-            // TODO
+            return ForwardIterator<T>(this->head);
         }
 
 	    ForwardIterator<T> end() {
-            // TODO
+            return ForwardIterator<T>(this->tail->next);
         }
 
         void merge(ForwardList<T> list) {

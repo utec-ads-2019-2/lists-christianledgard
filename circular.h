@@ -9,71 +9,121 @@ class CircularLinkedList : public List<T> {
         CircularLinkedList() : List<T>() {}
 
         T front() {
-            // TODO
+            if(this->get_size()==0)
+                throw out_of_range("This list is empty f.");
+            return this->head->data;
         }
 
+        void sort(){}
+
         T back() {
-            // TODO
+            if(this->get_size()==0)
+                throw out_of_range("This list is empty. b");
+            return this->head->prev->data;
         }
 
         void push_front(T value) {
-            // TODO
+            push_back(value);
+            //this->head = this->head->prev->data;
+            this->size++;
         }
 
         void push_back(T value) {
-            // TODO
+            auto *temp = new Node<T>;
+            temp->data = value;
+            temp->next = this->head;
+            if (this->head == nullptr) {
+                this->head = temp;
+                this->head->next = temp;
+                this->head->prev = temp;
+            } else {
+                this->head->prev->next = temp;
+                temp->prev = this->head->prev;
+                this->head->prev = temp;
+            }
+
+            this->size++;
         }
 
         void pop_front() {
-            // TODO
+            if (this->head != nullptr) {
+                auto temp = this->head;
+                this->nodes--;
+                if (this->nodes == 0)
+                    this->head = nullptr;
+                else {
+                    this->head->prev->next = this->head->next;
+                    this->head->next->prev = this->head->prev;
+                    this->head = this->head->next;
+                }
+                delete temp;
+            }
+            this->size--;
         }
 
         void pop_back() {
-            // TODO
+            if (this->head != nullptr) {
+                auto temp = this->head->prev;
+                this->nodes--;
+                if (this->nodes == 0)
+                    this->head = nullptr;
+                else {
+                    this->head->prev->prev->next = this->head;
+                    this->head->prev = this->head->prev->prev;
+                }
+                delete temp;
+            }
+            this->size--;
         }
 
         T operator[](int index) {
-            // TODO
+            if (index < this->get_size() and this->head != nullptr) {
+                auto temp = this->head;
+                for (unsigned int i = 0; i < index; i++) temp = temp->next;
+                return temp->data;
+            }
+            throw out_of_range("Index out of range");
         }
 
         bool empty() {
-            // TODO
+            return this->tail == nullptr;
         }
 
-        int size() {
-            // TODO
+
+        void print() override{
+            auto temp = this->head;
+            for (int i = 0; i < this->get_size(); ++i, temp = temp->next)
+                cout << temp->data << endl;
+            cout << "Size: " << this->get_size() << endl;
         }
 
         void clear() {
-            // TODO
-        }
-
-        void sort() {
-            // TODO
+            while(this->head != nullptr) pop_back();
         }
     
         void reverse() {
-            // TODO
+            auto temp = this->head;
+            for (int i = 0; i < this->get_size(); ++i, temp = temp->prev)
+                std::swap(temp->next, temp->prev);
+            std::swap(this->head, this->tail);
         }
 
-    void print() override {
 
-    }
-
-    string name() {
+        string name() {
             return "Circular Linked List";
         }
 
         BidirectionalIterator<T> begin() {
-            // TODO
+            return BidirectionalIterator<T>(this->head);
         }
 
 	    BidirectionalIterator<T> end() {
-            // TODO
+            return BidirectionalIterator<T>(this->head);
         }
 
         void merge(CircularLinkedList<T> list) {
-            // TODO
+            for (auto temp = list->head; temp != nullptr ; temp = temp->next)
+                push_back(temp->data);
         }
 };
 
