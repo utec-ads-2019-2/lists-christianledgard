@@ -95,11 +95,13 @@ class ForwardList : public List<T> {
         }
 
         bool empty() {
+            // Puede ser return !this->tail;
             return this->tail == nullptr;
         }
 
 
         void clear() {
+            // Pudiste haber llamado a killSelf()
             while(this->head != nullptr) pop_front();
         }
 

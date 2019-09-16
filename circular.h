@@ -23,6 +23,7 @@ class CircularLinkedList : public List<T> {
         }
 
         void push_front(T value) {
+            // Estás incrementando el tamaño 2 veces
             push_back(value);
             //this->head = this->head->prev->data;
             this->size++;
@@ -77,6 +78,7 @@ class CircularLinkedList : public List<T> {
         }
 
         T operator[](int index) {
+            // En el caso de la lista circular no interesa si es más grande
             if (index < this->get_size() and this->head != nullptr) {
                 auto temp = this->head;
                 for (unsigned int i = 0; i < index; i++) temp = temp->next;
@@ -118,6 +120,7 @@ class CircularLinkedList : public List<T> {
         }
 
 	    BidirectionalIterator<T> end() {
+            // Cómo manejas la iteración en un bucle while (it != list.end())? Sin do while
             return BidirectionalIterator<T>(this->head);
         }
 

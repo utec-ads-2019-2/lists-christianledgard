@@ -133,6 +133,7 @@ class LinkedList : public List<T> {
         }
 
 	    BidirectionalIterator<T> end() {
+            // this->tail->next
             return BidirectionalIterator<T> (this->head->next);
         }
 
